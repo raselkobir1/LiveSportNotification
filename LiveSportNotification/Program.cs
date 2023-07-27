@@ -1,5 +1,6 @@
 using LiveSportNotification.Models;
 using LiveSportNotification.Services;
+using LiveSportNotification.SignalRHub;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,10 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IFootballService, FootballService>();
+
+builder.Services.AddSignalR();
+
+builder.Services.AddControllersWithViews();
 
 
 var app = builder.Build();
@@ -40,6 +45,7 @@ app.UseEndpoints(endpoints =>
         pattern: "{controller=Home}/{action=Index}/{id?}");
 
     endpoints.MapControllers();
+    endpoints.MapHub<MatchCentreHub>("/matchcenterhub");
 });
 
 app.Run();

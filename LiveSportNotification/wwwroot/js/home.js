@@ -22,7 +22,6 @@ function bindMatches(matches) {
 
             html += "<td>";
             html += "<span data-team-id='" + match.team1Id + "' class='team-goals'>" + match.team1Goals + "</span>";
-            html += "<input type='button' class='btn btn-success' value='Add Goal' data-match-id='" + match.id + "' data-team-id='" + match.team1Id + "' onclick='addGoal(this);' />";
             html += "</td>";
 
             html += "<td>";
@@ -31,8 +30,6 @@ function bindMatches(matches) {
 
             html += "<td>";
             html += "<span data-team-id='" + match.team2Id + "' class='team-goals'>" + match.team2Goals + "</span>";
-            html += "<input type='button' class='btn btn-success' value='Add Goal' data-match-id='" + match.id + "' data-team-id='" + match.team2Id + "' onclick='addGoal(this);' />";
-
             html += "</td>";
 
             html += "<td>";
@@ -43,21 +40,4 @@ function bindMatches(matches) {
             html += "</tr>";
         });
     $("#listMatches").append(html);
-}
-
-function addGoal(element) {
-    var data =
-    {
-        matchId: $(element).attr("data-match-id"),
-        teamId: $(element).attr("data-team-id")
-    }
-
-    $.ajax({
-        type: 'PUT',
-        url: 'api/Matches',
-        contentType: 'application/json',
-        data: JSON.stringify(data)
-    }).done(function () {
-        loadMatches();
-    });
 }
